@@ -20,12 +20,24 @@ app.config(function($routeProvider) {
 app.controller('logingController', function($scope, $location) {
 	$scope.usr_name = "rahul";
 	$scope.submit = function() {
-		alert('jjii');
-		var usrname = $scope.usr_name;
-		var pwd = $scope.usr_pwd;
-		if (usrname == 'admin') {
-			$location.path('/dashboard');
-		}
+	 var request = $http({
+                method: "post",
+                url: "login.php",
+                data: {
+                    email: $scope.email,
+                    password: $scope.password
+                },
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            });
+            /* Successful HTTP post request or not */
+            request.success(function (data) {
+                if(data == "1"){
+                	$scope.responseMessage = "Successfully Logged In";
+                }
+                else {
+                	$scope.responseMessage = "Username or Password is incorrect";
+                }
+            });
 	}
 });
 
