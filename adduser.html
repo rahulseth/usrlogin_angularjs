@@ -1,1 +1,10 @@
-create user
+<div ng-controller="addUserController">
+<form>
+ <input type="text" ng-model="usr_name" placeholder="Name"></br></br>
+ <input type="email" ng-model="usr_email" placeholder="Email-Address"></br></br>
+ <input type="text" ng-model="usr_phone" placeholder="Phone Number"></br></br>
+ <input type="password" ng-model="usr_pwd" placeholder="Password"></br></br>
+ <button type="button" value="submit" ng-click="insert_data();">Create User</button>
+</form>
+{{msg}}
+</div>
