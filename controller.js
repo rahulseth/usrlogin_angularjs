@@ -17,10 +17,20 @@ app.config(function($routeProvider) {
   });
 });
 
-app.controller('logingController', function($scope, $location) {
-	$scope.usr_name = "rahul";
+app.controller('logingController', function($scope, $http, $location) {
+	$scope.usr_email = "ravi@teza.com";
+	$scope.usr_pwd = "abc";
 	$scope.submit = function() {
-	 var request = $http({
+	    $http.post("login.php", {
+			'email': $scope.usr_email,
+			'pwd': $scope.usr_pwd
+		}).success(function(data) {
+			 console.log('status'  + ' - ' + data);
+			$scope.msg = "User " + data;
+			//$location.path('/dashboard');
+		}); 
+	 
+	 /* var request = $http({
                 method: "post",
                 url: "login.php",
                 data: {
@@ -29,7 +39,7 @@ app.controller('logingController', function($scope, $location) {
                 },
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             });
-            /* Successful HTTP post request or not */
+       
             request.success(function (data) {
                 if(data == "1"){
                 	$scope.responseMessage = "Successfully Logged In";
@@ -37,7 +47,8 @@ app.controller('logingController', function($scope, $location) {
                 else {
                 	$scope.responseMessage = "Username or Password is incorrect";
                 }
-            });
+            }); */
+			//alert('jj');
 	}
 });
 
