@@ -1,6 +1,6 @@
 var app = angular.module("myApp", ["ngRoute"]);
 app.config(function($routeProvider) {
-    $routeProvider
+	$routeProvider
     .when("/", {
         templateUrl : "login.html",
 		controller : 'logingController'
@@ -24,31 +24,16 @@ app.controller('logingController', function($scope, $http, $location) {
 	    $http.post("login.php", {
 			'email': $scope.usr_email,
 			'pwd': $scope.usr_pwd
-		}).success(function(data) {
-			 console.log('status'  + ' - ' + data);
-			$scope.msg = "User " + data;
-			//$location.path('/dashboard');
+		}).then(function(response) {
+			 console.log('status'  + ' - ' + response);
+			//$scope.msg = JSON.stringify(response);
+			$scope.login = response.data[1].user_exist;
+			if (response.data[1].user_exist) {
+				$location.path('/dashboard');
+			}
+		}, function errorCallback(response) {
+			alert(JSON.stringify(response));
 		}); 
-	 
-	 /* var request = $http({
-                method: "post",
-                url: "login.php",
-                data: {
-                    email: $scope.email,
-                    password: $scope.password
-                },
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-            });
-       
-            request.success(function (data) {
-                if(data == "1"){
-                	$scope.responseMessage = "Successfully Logged In";
-                }
-                else {
-                	$scope.responseMessage = "Username or Password is incorrect";
-                }
-            }); */
-			//alert('jj');
 	}
 });
 
